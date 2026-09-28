@@ -25,7 +25,13 @@ function initCanisterEnv() {
     process.env.DFX_NETWORK ||
     (process.env.NODE_ENV === "production" ? "ic" : "local");
 
-  const canisterConfig = network === "local" ? localCanisters : prodCanisters;
+  const canisterConfig =
+    network === "local"
+      ? localCanisters
+      : prodCanisters || {
+          token: { ic: "xjg36-kiaaa-aaaad-agswq-cai" },
+          token_assets: { ic: "xafqc-4aaaa-aaaad-agsxa-cai" },
+        };
 
   return Object.entries(canisterConfig).reduce((prev, current) => {
     const [canisterName, canisterDetails] = current;
